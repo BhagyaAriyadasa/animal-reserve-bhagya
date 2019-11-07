@@ -5,7 +5,7 @@ let rekog = new AWS.Rekognition();
 exports.handler = function (event, context, callback) {
     //console.log(JSON.stringify(event, null, 2));
 
- let s3 = event.Records[0].s3;
+    let s3 = event.Records[0].s3;
     rekog.detectLabels({
         Image: {
             S3Object: {
@@ -24,7 +24,10 @@ exports.handler = function (event, context, callback) {
 
             ddb.put({
                 TableName: 'plant',
-                Item: { 'Name': s3.object.key, 'label': '@{label{' }
+                Item: {
+                    'Name': s3.object.key,
+                    'label': label
+                }
             }).promise()
                 .then((data) => {
                     //your logic goes here
@@ -35,6 +38,6 @@ exports.handler = function (event, context, callback) {
 
 
 
-           })
+        })
         .catch(err => callback(err));
 }

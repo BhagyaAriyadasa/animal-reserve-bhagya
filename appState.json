@@ -22,7 +22,7 @@
         "children": [],
         "isRemovable": true,
         "filePath": "animal-reserve-bhagya/recognizer.js",
-        "code": "let AWS = require(\"aws-sdk\");\nconst ddb = new AWS.DynamoDB.DocumentClient();\nlet rekog = new AWS.Rekognition();\n\nexports.handler = function (event, context, callback) {\n    //console.log(JSON.stringify(event, null, 2));\n\n let s3 = event.Records[0].s3;\n    rekog.detectLabels({\n        Image: {\n            S3Object: {\n                Bucket: s3.bucket.name,\n                Name: s3.object.key\n            }\n        },\n        MaxLabels: 1\n    }).promise()\n        .then(data => {\n            console.log(data);\n            let label = data.Labels[0].Name;\n\n\n\n\n            ddb.put({\n                TableName: 'plant',\n                Item: { 'Name': s3.object.key, 'label': '@{label{' }\n            }).promise()\n                .then((data) => {\n                    //your logic goes here\n                })\n                .catch((err) => {\n                    //handle error\n                });\n\n\n\n           })\n        .catch(err => callback(err));\n}\n",
+        "code": "let AWS = require(\"aws-sdk\");\nconst ddb = new AWS.DynamoDB.DocumentClient();\nlet rekog = new AWS.Rekognition();\n\nexports.handler = function (event, context, callback) {\n    //console.log(JSON.stringify(event, null, 2));\n\n    let s3 = event.Records[0].s3;\n    rekog.detectLabels({\n        Image: {\n            S3Object: {\n                Bucket: s3.bucket.name,\n                Name: s3.object.key\n            }\n        },\n        MaxLabels: 1\n    }).promise()\n        .then(data => {\n            console.log(data);\n            let label = data.Labels[0].Name;\n\n\n\n\n            ddb.put({\n                TableName: 'plant',\n                Item: {\n                    'Name': s3.object.key,\n                    'label': label\n                }\n            }).promise()\n                .then((data) => {\n                    //your logic goes here\n                })\n                .catch((err) => {\n                    //handle error\n                });\n\n\n\n        })\n        .catch(err => callback(err));\n}\n",
         "config": {
           "runtime": "nodejs8.10",
           "handler": "handler",
@@ -106,12 +106,11 @@
           },
           "isGlobalEditMode": false,
           "parameters": {
-            "Key": {},
+            "TableName": "plant",
             "Item": {
               "Name": "@{s3.object.key}",
-              "label": "@{label{"
-            },
-            "ExpressionAttributeValues": {}
+              "label": "@{label}"
+            }
           },
           "triggerParams": {},
           "validator": {
@@ -155,7 +154,7 @@
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1573113222515
+    "lastSave": 1573113487249
   },
   "VCS_STATE": {
     "provider": "GitHub",
