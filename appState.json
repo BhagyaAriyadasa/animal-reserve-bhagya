@@ -1,0 +1,108 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "6e2ae852-c1df-41d1-a5bd-b3b2a8d89c22": {
+        "id": "6e2ae852-c1df-41d1-a5bd-b3b2a8d89c22",
+        "parent": null,
+        "name": "animal-reserve-bhagya",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "55e159c9-1f5a-436b-bb43-058e5168c1f2"
+        ],
+        "isRemovable": false,
+        "filePath": "animal-reserve-bhagya"
+      },
+      "55e159c9-1f5a-436b-bb43-058e5168c1f2": {
+        "id": "55e159c9-1f5a-436b-bb43-058e5168c1f2",
+        "parent": "6e2ae852-c1df-41d1-a5bd-b3b2a8d89c22",
+        "name": "recognizer.js",
+        "type": "JS_LAMBDA",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "animal-reserve-bhagya/recognizer.js",
+        "code": "exports.handler = function(event, context, callback) {\n    console.log(JSON.stringify(event,null,2));\n    callback(null, {\"message\": \"Successfully executed\"});\n}",
+        "config": {
+          "runtime": "nodejs8.10",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        },
+        "triggers": [
+          {
+            "resourceName": "s3slpBhagya",
+            "config": {
+              "type": "s3:ObjectCreated:*",
+              "keyPrefix": "",
+              "keySuffix": ""
+            }
+          }
+        ],
+        "testCases": {
+          "0be7b334-1086-4152-a56f-b3cc309d4bf4": {
+            "id": "0be7b334-1086-4152-a56f-b3cc309d4bf4",
+            "name": "Test",
+            "functionId": "55e159c9-1f5a-436b-bb43-058e5168c1f2",
+            "event": "{\n    \"key1\": \"value1\",\n    \"key2\": \"value2\",\n    \"key3\": \"value3\"\n}"
+          }
+        }
+      }
+    },
+    "deletedFiles": [
+      "animal-reserve-bhagya/lambda.js"
+    ],
+    "rootNode": "6e2ae852-c1df-41d1-a5bd-b3b2a8d89c22",
+    "openFiles": [
+      "55e159c9-1f5a-436b-bb43-058e5168c1f2"
+    ],
+    "currentFileId": "55e159c9-1f5a-436b-bb43-058e5168c1f2",
+    "resources": {
+      "s3slpBhagya": {
+        "name": "s3slpBhagya",
+        "type": "S3",
+        "config": {
+          "mode": 1,
+          "bucket": {
+            "region": "us-east-1",
+            "name": "slp-bhagya"
+          }
+        }
+      }
+    },
+    "customTemplate": {
+      "dialect": null,
+      "definitions": {}
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {}
+    }
+  },
+  "PROJECT_META": {
+    "projectName": "animal-reserve-bhagya",
+    "projectDescription": "detect and record safari animals",
+    "projectVersion": "1.0.0",
+    "projectRegion": "us-east-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1573109449812
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "animal-reserve-bhagya",
+      "url": "https://github.com/BhagyaAriyadasa/animal-reserve-bhagya"
+    }
+  }
+}
